@@ -22,6 +22,19 @@ public class SavedNewsAdapter extends RecyclerView.Adapter<SavedNewsAdapter.Save
     private static int[] ICON_ARRAY = new int[]{R.drawable.a_news_icon, R.drawable.g_news_icon,
             R.drawable.c_news_icon, R.drawable.y_news_icon, R.drawable.m_news_icon};
 
+    //3.7
+    public SavedNewsAdapter(TinFragmentManager tinFragmentManager) {
+        this.fragmentManager = tinFragmentManager;
+        this.newsList = new LinkedList<>();
+
+    }
+
+    public void setNewsList(List<News> newsList) {
+        this.newsList.clear();
+        this.newsList.addAll(newsList);
+        notifyDataSetChanged();
+    }
+
     @Override
     public SavedNewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.saved_news_item, parent, false);
@@ -47,19 +60,6 @@ public class SavedNewsAdapter extends RecyclerView.Adapter<SavedNewsAdapter.Save
         return ICON_ARRAY[(int)(Math.random() * 5)];
     }
 
-    //3.7
-    public SavedNewsAdapter(TinFragmentManager tinFragmentManager) {
-        this.fragmentManager = tinFragmentManager;
-        this.newsList = new LinkedList<>();
-
-    }
-
-    public void setNewsList(List<News> newsList) {
-        this.newsList.clear();
-        this.newsList.addAll(newsList);
-        notifyDataSetChanged();
-    }
-
 
     @Override
     public int getItemCount() {
@@ -79,5 +79,4 @@ public class SavedNewsAdapter extends RecyclerView.Adapter<SavedNewsAdapter.Save
             icon = itemView.findViewById(R.id.image);
         }
     }
-
 }

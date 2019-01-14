@@ -19,9 +19,9 @@ public class SavedNewsDetailedFragment extends TinBasicFragment {
 
 
     public static SavedNewsDetailedFragment newInstance() {
-        //Bundle args = new Bundle();
+        Bundle args = new Bundle();
         SavedNewsDetailedFragment fragment = new SavedNewsDetailedFragment();
-        //fragment.setArguments(args);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -34,6 +34,7 @@ public class SavedNewsDetailedFragment extends TinBasicFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        /*
         View view = inflater.inflate(R.layout.fragment_saved_news, container, false);
         TextView textView = view.findViewById(R.id.text);
         textView.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +44,8 @@ public class SavedNewsDetailedFragment extends TinBasicFragment {
             }
         });
         return view;
+        */
+        return inflater.inflate(R.layout.fragment_saved_news_detailed, container, false);
     }
 
     //lifecycle code starts from here

@@ -4,6 +4,8 @@ package com.tinnews.tinnews.save;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +25,17 @@ import java.util.List;
  */
 public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter> implements SavedNewsContract.View {
     //4.3
-    private TextView author;
-    private TextView description;
+    // private TextView author;
+    // private TextView description;
+    //3.8
+    private SavedNewsAdapter savedNewsAdapter;
+    private TextView emptyState;
 
 
     public static SavedNewsFragment newInstance() {
-        //Bundle args = new Bundle();
+        Bundle args = new Bundle();
         SavedNewsFragment fragment = new SavedNewsFragment();
-        //fragment.setArguments(args);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -38,6 +43,23 @@ public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter> 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
+    //7.8
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        //7.8
+        View view = inflater.inflate(R.layout.fragment_saved_news, container, false);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        emptyState = view.findViewById(R.id.empty_state);
+        savedNewsAdapter = new SavedNewsAdapter(tinFragmentManager);
+        recyclerView.setAdapter(savedNewsAdapter);
+        return view;
+    }
+
+
     /*
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,6 +77,7 @@ public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter> 
 
     }
     */
+    /*
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,48 +93,8 @@ public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter> 
             }
         });
         return view;
-        /*
-        TextView textView = view.findViewById(R.id.text);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tinFragmentManager.doFragmentTransaction(SavedNewsDetailedFragment.newInstance());
-            }
-        });
-        return view;
-        */
     }
-
-    //lifecycle code starts from here
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
+    */
 
     @Override
     public SavedNewsContract.Presenter getPresenter() {
@@ -120,11 +103,22 @@ public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter> 
 
     @Override
     public void loadSavedNews(List<News> newsList) {
+        if (newsList.size() == 0) {
+            emptyState.setVisibility(View.VISIBLE);
+        } else {
+            emptyState.setVisibility(View.GONE);
+        }
+        if (newsList != null) {
+            savedNewsAdapter.setNewsList(newsList);
+        }
+
         //4.4
-        if (newsList.size() > 0) {
+        /*
+        if (newsList.size() - 0) {
             News news = newsList.get(newsList.size() - 1);
             author.setText(news.getAuthor());
             description.setText(news.getDescription());
         }
+        */
     }
 }
