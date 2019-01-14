@@ -106,6 +106,16 @@ public class TinGalleryFragment extends MvpFragment<TinContract.Presenter> imple
         }
     }
 
+    @Override
+    public void onError() {
+        Toast.makeText(getContext(), "Save news has been saved before", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSaveSuccess() {
+        Toast.makeText(getContext(), "Save news successfully", Toast.LENGTH_SHORT).show();
+    }
+
 
     @Override
     public void onLike(News news) {

@@ -6,9 +6,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.tinnews.tinnews.common.ContainerFragment;
 
-/**
- * Created by dxie on 12/17/18.
- */
 
 public class TinFragmentPagerAdapter extends FragmentPagerAdapter {
     private Fragment[] fragments = new Fragment[FRAGMENT_NUMBER];

@@ -12,12 +12,19 @@ import android.widget.TextView;
 import com.tinnews.tinnews.R;
 import com.tinnews.tinnews.common.TinBasicFragment;
 import com.tinnews.tinnews.common.TinFragmentManager;
+import com.tinnews.tinnews.mvp.MvpFragment;
+import com.tinnews.tinnews.retrofit.response.News;
 import com.tinnews.tinnews.save.detail.SavedNewsDetailedFragment;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SavedNewsFragment extends TinBasicFragment {
+public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter> implements SavedNewsContract.View {
+    //4.3
+    private TextView author;
+    private TextView description;
 
 
     public static SavedNewsFragment newInstance() {
@@ -53,6 +60,17 @@ public class SavedNewsFragment extends TinBasicFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_saved_news, container, false);
+        //4.3
+        author = view.findViewById(R.id.author);
+        description = view.findViewById(R.id.description);
+        description.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tinFragmentManager.doFragmentTransaction(SavedNewsDetailedFragment.newInstance());
+            }
+        });
+        return view;
+        /*
         TextView textView = view.findViewById(R.id.text);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +79,7 @@ public class SavedNewsFragment extends TinBasicFragment {
             }
         });
         return view;
+        */
     }
 
     //lifecycle code starts from here
@@ -92,5 +111,20 @@ public class SavedNewsFragment extends TinBasicFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public SavedNewsContract.Presenter getPresenter() {
+        return new SavedNewsPresenter();
+    }
+
+    @Override
+    public void loadSavedNews(List<News> newsList) {
+        //4.4
+        if (newsList.size() > 0) {
+            News news = newsList.get(newsList.size() - 1);
+            author.setText(news.getAuthor());
+            description.setText(news.getDescription());
+        }
     }
 }

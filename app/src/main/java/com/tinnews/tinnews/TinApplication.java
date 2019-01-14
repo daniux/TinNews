@@ -6,9 +6,6 @@ import android.arch.persistence.room.Room;
 import com.facebook.stetho.Stetho;
 import com.tinnews.tinnews.database.AppDatabase;
 
-/**
- * Created by dxie on 12/17/18.
- */
 
 public class TinApplication extends Application {
     public static AppDatabase database;

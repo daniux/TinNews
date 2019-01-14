@@ -1,6 +1,7 @@
 package com.tinnews.tinnews.tin;
 
 import android.annotation.SuppressLint;
+import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
 
 import com.tinnews.tinnews.TinApplication;
@@ -14,9 +15,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-/**
- * Created by dxie on 1/7/19.
- */
 
 public class TinModel implements TinContract.Model {
     //keep the reference of TinContract.Presenter
@@ -61,8 +59,13 @@ public class TinModel implements TinContract.Model {
     public void saveFavoriteNews(News news) {
         Disposable disposable = Completable.fromAction(() -> db.newsDao().insertNews(news)).
                 subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(() ->{
-
+                presenter.onSaveSuccess();
         }, error -> {
+            if (error instanceof SQLiteConstraintException) {
+                presenter.onError();
+            }
+            // presenter.onError();
+            // Log.e("test test","error", error);
         });
     }
 }

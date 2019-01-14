@@ -4,10 +4,6 @@ import com.tinnews.tinnews.retrofit.response.News;
 
 import java.util.List;
 
-/**
- * Created by dxie on 1/7/19.
- */
-
 public class TinPresenter implements TinContract.Presenter {
     //hold the reference
     private TinContract.View view;
@@ -54,5 +50,19 @@ public class TinPresenter implements TinContract.Presenter {
     @Override
     public void saveFavoriteNews(News news) {
         model.saveFavoriteNews(news);
+    }
+
+    @Override
+    public void onError() {
+        if (view != null) {
+            view.onError();
+        }
+    }
+
+    @Override
+    public void onSaveSuccess() {
+        if (view != null) {
+            view.onSaveSuccess();
+        }
     }
 }
