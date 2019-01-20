@@ -14,10 +14,12 @@ import android.widget.TextView;
 import com.tinnews.tinnews.R;
 import com.tinnews.tinnews.common.TinBasicFragment;
 import com.tinnews.tinnews.common.TinFragmentManager;
+import com.tinnews.tinnews.common.ViewModelAdapter;
 import com.tinnews.tinnews.mvp.MvpFragment;
 import com.tinnews.tinnews.retrofit.response.News;
 import com.tinnews.tinnews.save.detail.SavedNewsDetailedFragment;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -28,7 +30,8 @@ public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter> 
     // private TextView author;
     // private TextView description;
     //3.8
-    private SavedNewsAdapter savedNewsAdapter;
+    // private SavedNewsAdapter savedNewsAdapter;
+    private ViewModelAdapter savedNewsAdapter;
     private TextView emptyState;
 
 
@@ -54,7 +57,8 @@ public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter> 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         emptyState = view.findViewById(R.id.empty_state);
-        savedNewsAdapter = new SavedNewsAdapter(tinFragmentManager);
+        // savedNewsAdapter = new SavedNewsAdapter(tinFragmentManager);
+        savedNewsAdapter = new ViewModelAdapter();
         recyclerView.setAdapter(savedNewsAdapter);
         return view;
     }
@@ -109,9 +113,24 @@ public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter> 
             emptyState.setVisibility(View.GONE);
         }
         if (newsList != null) {
-            savedNewsAdapter.setNewsList(newsList);
+            List<SavedNewsViewModel> models = new LinkedList<>();
+            for (News news : newsList) {
+                models.add(new SavedNewsViewModel(news, tinFragmentManager));
+            }
+            savedNewsAdapter.addViewModels(models);
         }
 
+
+        /*
+        if (newsList.size() == 0) {
+            emptyState.setVisibility(View.VISIBLE);
+        } else {
+            emptyState.setVisibility(View.GONE);
+        }
+        if (newsList != null) {
+            savedNewsAdapter.setNewsList(newsList);
+        }
+        */
         //4.4
         /*
         if (newsList.size() - 0) {

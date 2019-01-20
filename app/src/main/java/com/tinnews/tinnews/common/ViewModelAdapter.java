@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * Created by dxie on 1/14/19.
- */
 
 public class ViewModelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final List<BaseViewModel> viewModels;
@@ -20,7 +17,6 @@ public class ViewModelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         viewModels = new ArrayList<>();
         viewTypeMap = new SparseArrayCompat<>();
     }
-
 
     public void addViewModels(Collection<? extends BaseViewModel> viewModels) {
         this.viewModels.clear();
