@@ -11,6 +11,9 @@ public interface SavedNewsContract {
     interface View extends MvpContract.View<Presenter> {
         //3.2
         void loadSavedNews(List<News> newsList);
+        // record position start
+        boolean isViewEmpty();
+        // record position stop
     }
 
     interface Presenter extends  MvpContract.Presenter<View, Model> {

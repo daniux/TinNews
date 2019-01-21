@@ -33,7 +33,10 @@ public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter> 
     // private SavedNewsAdapter savedNewsAdapter;
     private ViewModelAdapter savedNewsAdapter;
     private TextView emptyState;
-
+    // record location start
+    private LinearLayoutManager linearLayoutManager;
+    private int initPosition = -1;
+    // record location stop
 
     public static SavedNewsFragment newInstance() {
         Bundle args = new Bundle();
@@ -55,11 +58,28 @@ public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter> 
         //7.8
         View view = inflater.inflate(R.layout.fragment_saved_news, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        // record position start
+        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        // record position stop
         emptyState = view.findViewById(R.id.empty_state);
+
+        // record location start
+        if (isViewEmpty()) {
+            emptyState.setVisibility(View.VISIBLE);
+        } else {
+            emptyState.setVisibility(View.GONE);
+        }
+        if (savedNewsAdapter == null) {
+            savedNewsAdapter = new ViewModelAdapter();
+        }
+
+
         // savedNewsAdapter = new SavedNewsAdapter(tinFragmentManager);
-        savedNewsAdapter = new ViewModelAdapter();
+        //savedNewsAdapter = new ViewModelAdapter();
         recyclerView.setAdapter(savedNewsAdapter);
+        // record location stop
         return view;
     }
 
@@ -140,4 +160,16 @@ public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter> 
         }
         */
     }
+    // record location start
+    @Override
+    public boolean isViewEmpty() {
+        return savedNewsAdapter == null || savedNewsAdapter.isEmpty();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        initPosition = linearLayoutManager.findFirstVisibleItemPosition();
+    }
+    // record location stop
 }

@@ -30,7 +30,11 @@ public class SavedNewsPresenter implements SavedNewsContract.Presenter {
         //1.6
         this.view = view;
         //4.5
-        this.model.fetchData();
+        // record position start
+        if (view.isViewEmpty()) {
+            this.model.fetchData();
+        }
+        // record position stop
     }
 
     @Override
