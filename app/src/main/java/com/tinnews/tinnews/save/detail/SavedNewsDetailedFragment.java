@@ -83,6 +83,15 @@ public class SavedNewsDetailedFragment extends TinBasicFragment {
             viewModels.add(new ImageViewModel(news.image));
         }
 
+        if (!Util.isStringEmpty(news.description)) {
+            viewModels.add(new DescriptionViewModel(news.description));
+        }
+
+        if (!Util.isStringEmpty(news.url)) {
+            viewModels.add(new ReadmoreViewModel(news.url, tinFragmentManager));
+        }
+
+
         viewModelAdapter.addViewModels(viewModels);
 
     }
