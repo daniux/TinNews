@@ -1,6 +1,11 @@
 package com.tinnews.tinnews.tin;
 
+import com.tinnews.tinnews.profile.CountryEvent;
 import com.tinnews.tinnews.retrofit.response.News;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -19,19 +24,29 @@ public class TinPresenter implements TinContract.Presenter {
 
     @Override
     public void onCreate() {
-
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onDestroy() {
-
+        EventBus.getDefault().unregister(this);
     }
+
+    //7.3
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(CountryEvent countryEvent) {
+        if (this.view != null) {
+            //7.6
+            this.model.fetchData(countryEvent.country);
+        }
+    }
+
 
     @Override
     public void onViewAttached(TinContract.View view) {
         //hold the reference
         this.view = view;
-        this.model.fetchData();
+        this.model.fetchData("us");
     }
 
     @Override

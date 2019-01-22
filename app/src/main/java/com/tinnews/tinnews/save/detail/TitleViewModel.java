@@ -20,6 +20,8 @@ public class TitleViewModel extends BaseViewModel<TitleViewModel.TitleViewModelH
         this.title = title;
     }
 
+
+
     @Override
     public TitleViewModelHolder createItemViewHolder(View view) {
         return new TitleViewModelHolder(view);
