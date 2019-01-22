@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.tinnews.tinnews.R;
+import com.tinnews.tinnews.profile.TinProfileFragment;
 import com.tinnews.tinnews.save.SavedNewsFragment;
 import com.tinnews.tinnews.tin.TinGalleryFragment;
 
@@ -45,7 +46,7 @@ public class ContainerFragment extends TinBasicFragment {
             case SAVE_PAGE:
                 return SavedNewsFragment.newInstance();
             case PROFILE_PAGE:
-                return null;
+                return TinProfileFragment.newInstance();
             default:
                 throw new IndexOutOfBoundsException();
         }
